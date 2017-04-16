@@ -40,7 +40,7 @@ public class StringParser {
 				System.out.println(ts[2]);
 				System.out.println(ts[3] + " " + classnameOrRandomListMarker(ts[2]));
 				if ((openSquareBracket(ts[3])) && (classnameOrRandomListMarker(ts[2]))) {
-						result.classnames.setClassnames(parseClassnames(ts,2));
+						result.classnames.setClassnames(parseClassnamesOrFunctionNames(ts,2,true));
 						int nextStop = 4 + result.classnames.size(); 
 						if ((comma(ts[nextStop])) && (number(ts[nextStop+1])) && (closeParen(ts[nextStop+2]))) {
 						result.qty = Integer.parseInt(ts[nextStop+1]);
@@ -77,11 +77,15 @@ public class StringParser {
 		return result;
 	}
 	
-	private boolean isClassname(String s) {
-		return s.matches("\"[a-zA-Z0-9_]*\"") || s.matches("'[a-zA-Z0-9_]*'");
+	private boolean isClassname(String s, boolean requireQuotes) {
+		if (requireQuotes)  {
+			return s.matches("\"[a-zA-Z0-9_]*\"") || s.matches("'[a-zA-Z0-9_]*'");
+		} else {
+			return s.matches("[a-zA-Z0-9_]*");
+		}
 	}
 
-	private String parseClassnames(String[] ts, int i) throws ParserException {
+	private String parseClassnamesOrFunctionNames(String[] ts, int i, boolean requireQuotes) throws ParserException {
 		parserReport("parseClassnames, " + ts[i]);
 		if (ts[i].equalsIgnoreCase("selectRandom")) {
 			parserReport("selectRandom");
@@ -89,7 +93,7 @@ public class StringParser {
 			i+=2; // [
 			boolean finished = false;
 			parserReport("class: " + ts[i]);
-			while (isClassname(ts[i]) && !finished) {
+			while (isClassname(ts[i],  requireQuotes) && !finished) {
 				parserReport("Next class name: " + ts[i] + " " + ts[i+1]);
 				if (closeSquareBracket(ts[i+1])) {
 					output += unquote(ts[i]);
@@ -102,7 +106,7 @@ public class StringParser {
 				i+=2;
 			}
 			return output;
-		} else if (isClassname(ts[i])) {
+		} else if (isClassname(ts[i], requireQuotes)) {
 			return ts[i].replaceAll("[\"\']", "");
 		} else {
 			throw new ParserException();
@@ -112,6 +116,7 @@ public class StringParser {
 
 	private ArmaEquip script(String[] ts) throws ParserException {
 		// TODO Auto-generated method stub
+		parserReport("Script");
 		ArmaEquip result = new ArmaEquip();
 		if (openSquareBracket(ts[0]) && who(ts[1]) && closeSquareBracket(ts[2])) {
 			if (ts[3].equalsIgnoreCase("call")) {
@@ -125,6 +130,10 @@ public class StringParser {
 					} else {
 						throw (new ParserException());
 					}
+					return result;
+				} else if (ts[4].equalsIgnoreCase("selectRandom")) {
+					result.classnames.setClassnames(parseClassnamesOrFunctionNames(ts,4,false));
+					result.addableType = AddableType.FUNCTION;
 					return result;
 				} else if (ts[4].matches("[A-Za-z0-9_]+")) {
 /*					String[] between_underscores = ts[4].split("_");
@@ -278,7 +287,6 @@ public class StringParser {
 			if (result != null) {
 				result.qty = qty;
 			}
-			;
 			return result;
 		}
 		return null;

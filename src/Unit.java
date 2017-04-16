@@ -66,6 +66,7 @@ public class Unit {
 			}
 		}
 		System.out.println("Child count: " + children.size());
+		updateParentInfo();
 	}
 	
 	public void updateParentInfo() {

@@ -19,7 +19,7 @@ public class ClassnameSetTest {
 
 	@Test
 	public void testGetSQF() {
-		System.out.println(set.getSQF());
+		System.out.println(set.getSQF(true));
 	}
 
 	@Test

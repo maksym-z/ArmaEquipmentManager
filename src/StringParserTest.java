@@ -12,13 +12,13 @@ public class StringParserTest {
 		StringParser p = new StringParser();
 		ArmaEquip r = p.parse(testString);
 		System.out.println(r.classnames);
-		System.out.println(r.classnames.getSQF());
+		System.out.println(r.classnames.getSQF(true));
 		r = p.parse(testString1);
 		System.out.println(r.classnames);
-		System.out.println(r.classnames.getSQF());
+		System.out.println(r.classnames.getSQF(true));
 		r = p.parse(testString2);
 		System.out.println(r.classnames);
-		System.out.println(r.classnames.getSQF());
+		System.out.println(r.classnames.getSQF(false));
 	}
 
 }

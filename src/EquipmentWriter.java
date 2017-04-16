@@ -60,6 +60,7 @@ public class EquipmentWriter {
 			writer.flush();
 			writer.write(PREFIX + System.lineSeparator());
 			unit.updateParentInfo();
+			System.out.println(unit.getName() + ", parents: " + unit.getParents().size());
 			if (unit.getParents().size() == 0) {
 				writer.write(CLEAR_PREFIX + System.lineSeparator());
 			}
@@ -84,16 +85,16 @@ public class EquipmentWriter {
 						
 					}*/
 				} else if (item.addableType == AddableType.FUNCTION) {
-					writer.write("[" + WHO + "] call " + item.classnames + ";");
+					writer.write("[" + WHO + "] call " + item.classnames.getSQF(false) + ";");
 					writer.write("// function");
 				} else if (item.qty == 1) {
-					writer.write(WHO + " " + addCommand + " " + (item.classnames.getSQF()) + ";");
+					writer.write(WHO + " " + addCommand + " " + (item.classnames.getSQF(true)) + ";");
 				} else {
 					if (item.addableType != AddableType.MAGAZINE) {
 						writer.write("for '_i' from 1 to " + item.qty + " do {" + WHO + " " + addCommand + " "
-								+ item.classnames.getSQF() + ";};");
+								+ item.classnames.getSQF(true) + ";};");
 					} else {
-						writer.write(WHO + " " + addCommand + " [" + (item.classnames.getSQF()) + ", " + item.qty + "];");
+						writer.write(WHO + " " + addCommand + " [" + (item.classnames.getSQF(true)) + ", " + item.qty + "];");
 					}
 				}
 				this.addToPrecompileList(pathToFunctionName(path) + " = compile preprocessFileLineNumbers " + enquote(path) + ";");

@@ -11,6 +11,7 @@ public class ClassnameSet {
 		classnames.clear();
 		for (String name: names) {
 			classnames.add(name.trim());
+			System.out.println("Addinc class name " + name);
 		}
 	}
 	
@@ -38,8 +39,14 @@ public class ClassnameSet {
 		return generateList("","","","");
 	}
 	
-	public String getSQF() {
-		return generateList("'","'","selectRandom [","]");
+	public String getSQF(boolean quotes) {
+		String prefix;
+		if (quotes) {
+			prefix = "'";
+		} else {
+			prefix = "";
+		}
+		return generateList(prefix,prefix,"selectRandom [","]");
 	}
 	
 	public String formatAsFunctions(Unit unit) {

@@ -90,6 +90,7 @@ public class Controller {
 			return;
 		}
 		try {
+			updateAllChildren(unit.getFaction());
 			EquipmentWriter writer = new EquipmentWriter(unit, false);
 			writer.write();
 			setGotChanges(false);
@@ -103,7 +104,14 @@ public class Controller {
 		}
 	}
 	
+	public void updateAllChildren(Faction faction) {
+		for(String unitName: faction.getUnits().keySet()) {
+			faction.getUnit(unitName).updateChildren();
+		}
+	}
+	
 	public void saveAll(Faction faction) {
+		updateAllChildren(faction);
 		for(String unitName: faction.getUnits().keySet()) {
 			saveUnit(faction.getUnit(unitName));
 		}
@@ -141,6 +149,7 @@ public class Controller {
 	}
 
 	public void saveAllUnits(boolean precompile) {
+		updateAllChildren(getCurrentFaction());
 		// TODO Auto-generated method stub
 		if (getCurrentFaction() == null || getCurrentFaction().getUnits().size() < 1) {
 			errorMessage("Nothing to save");
