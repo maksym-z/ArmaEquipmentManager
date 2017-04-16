@@ -1,0 +1,22 @@
+if (!isServer) exitWith {};
+_unit = _this select 0;
+
+removeAllWeapons _unit;
+removeAllItems _unit;
+removeAllAssignedItems _unit;
+removeUniform _unit;
+removeVest _unit;
+removeBackpack _unit;
+removeHeadgear _unit;
+removeGoggles _unit;
+_unit forceAddUniform 'LOP_U_CDF_Fatigue_01';
+_unit addVest 'rhs_vest_commander';
+for '_i' from 1 to 3 do {_unit addItemToVest 'rhs_30Rnd_545x39_AK';};
+_unit addHeadgear 'rhs_tsh4';
+_unit addWeapon 'hlc_rifle_aks74u';
+_unit linkItem 'ItemCompass';
+_unit linkItem 'ItemWatch';
+_unit linkItem 'ItemRadio';
+_unit linkItem 'ItemGPS';
+_unit linkItem 'ItemMap';
+_unit addItem 'thing';

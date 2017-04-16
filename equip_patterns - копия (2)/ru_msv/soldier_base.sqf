@@ -1,0 +1,11 @@
+_unit = _this select 0;
+removeallweapons _unit;
+removeallassigneditems _unit;
+removeBackpack _unit;
+removeVest _unit;
+removeHeadgear _unit;
+removeUniform _unit;
+removeGoggles _unit;
+_unit forceAddUniform "rhs_uniform_flora";
+_unit linkItem "ItemCompass";
+_unit linkItem "ItemWatch";

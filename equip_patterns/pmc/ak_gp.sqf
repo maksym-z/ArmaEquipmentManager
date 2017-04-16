@@ -1,0 +1,22 @@
+if (!isServer) exitWith {};
+_unit = _this select 0;
+
+removeAllWeapons _unit;
+removeAllItems _unit;
+removeAllAssignedItems _unit;
+removeUniform _unit;
+removeVest _unit;
+removeBackpack _unit;
+removeHeadgear _unit;
+removeGoggles _unit;
+for '_i' from 1 to 2 do {_unit addItemToVest 'rhs_30Rnd_762x39mm';};
+for '_i' from 1 to 2 do {_unit addItemToVest 'rhs_30Rnd_762x39mm_89';};
+for '_i' from 1 to 8 do {_unit addItemToVest 'rhs_VOG25';};
+_unit addBackpack 'B_FieldPack_oli';
+_unit addItemToBackpack 'rhs_pzn_75Rnd_762x39mm';
+_unit addItemToBackpack 'rhs_pzn_75Rnd_762x39mm_tracer';
+for '_i' from 1 to 2 do {_unit addItemToBackpack 'rhs_30Rnd_762x39mm';};
+for '_i' from 1 to 2 do {_unit addItemToBackpack 'rhs_30Rnd_762x39mm_tracer';};
+for '_i' from 1 to 2 do {_unit addItemToBackpack 'rhs_GRD40_Green';};
+for '_i' from 1 to 2 do {_unit addItemToBackpack 'rhs_GRD40_Red';};
+_unit addWeapon 'rhs_weap_akm_gp25';

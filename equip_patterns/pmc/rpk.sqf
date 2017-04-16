@@ -1,0 +1,18 @@
+if (!isServer) exitWith {};
+_unit = _this select 0;
+
+removeAllWeapons _unit;
+removeAllItems _unit;
+removeAllAssignedItems _unit;
+removeUniform _unit;
+removeVest _unit;
+removeBackpack _unit;
+removeHeadgear _unit;
+removeGoggles _unit;
+_unit addItemToVest 'rhs_pzn_75Rnd_762x39mm';
+_unit addItemToVest 'rhs_pzn_75Rnd_762x39mm_tracer';
+_unit addBackpack 'usm_pack_alice';
+for '_i' from 1 to 3 do {_unit addItemToBackpack 'rhs_pzn_75Rnd_762x39mm_tracer';};
+for '_i' from 1 to 2 do {_unit addItemToBackpack 'rhs_pzn_75Rnd_762x39mm';};
+_unit addWeapon 'rhs_pzn_weap_rpkn75';
+_unit addPrimaryWeaponItem 'rhs_acc_pkas';
