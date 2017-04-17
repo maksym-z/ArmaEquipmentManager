@@ -192,6 +192,7 @@ public class Controller {
 		}
 		getCurrentFaction().addUnit(newUnit);
 		setSelectedUnit(newUnit.getName());
+		graphView.addUnit(newUnit.getName());
 		setGotChanges(true);
 		return newUnit;
 	}

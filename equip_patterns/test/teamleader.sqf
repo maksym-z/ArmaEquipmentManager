@@ -9,6 +9,5 @@ removeVest _unit;
 removeBackpack _unit;
 removeHeadgear _unit;
 removeGoggles _unit;
-[_unit] call bn_equip_pmc_base;// function
-[_unit] call bn_equip_pmc_m60;// function
-[_unit] call bn_equip_pmc_ace_med;// kit
+[_unit] call bn_equip_test_rifleman;// kit
+[_unit] call bn_equip_test_map_and_stuff;// kit

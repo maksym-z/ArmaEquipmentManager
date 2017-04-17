@@ -80,4 +80,8 @@ public class ClassnameSet {
 	public int size() {
 		return classnames.size();
 	}
+
+	public void add(String classname) {
+		classnames.add(classname);
+	}
 }
