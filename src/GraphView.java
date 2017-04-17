@@ -1,12 +1,21 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGraphModel.mxGeometryChange;
 import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.handler.mxConnectionHandler;
+import com.mxgraph.util.mxEvent;
+import com.mxgraph.util.mxEventObject;
+import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.view.mxGraph;
 
 public class GraphView extends JFrame {
@@ -39,6 +48,20 @@ public class GraphView extends JFrame {
 		mxGraphComponent graphComponent = new mxGraphComponent(graph);
 		getContentPane().removeAll();
 		getContentPane().add(graphComponent);
+		graphComponent.getGraphControl().addMouseListener(new MouseAdapter()
+		{
+		
+			public void mouseReleased(MouseEvent e)
+			{
+				Object cell = graphComponent.getCellAt(e.getX(), e.getY());
+				if (cell != null && graph.getModel().isVertex(cell))
+				{
+					controller.setSelectedUnit(graph.getLabel(cell));
+					System.out.println("cell="+graph.getLabel(cell));
+				}
+			}
+		});
+		
 	}
 
 	

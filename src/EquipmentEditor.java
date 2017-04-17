@@ -310,8 +310,9 @@ public class EquipmentEditor extends JFrame {
 		contentPane.add(listenerToolbar, gbc_listenerToolbar);
 		
 		for (AddableType addableType: AddableType.values()) {
-			JCheckBox newCheckBox = new JCheckBox(addableType.toString());
+			JCheckBox newCheckBox = new JCheckBox(addableType.toString().toLowerCase().substring(0,Math.min(5,addableType.toString().length())));
 			checkBoxToTypeMap.put(newCheckBox, addableType);
+			newCheckBox.setToolTipText(addableType.toString());
 			listenerToolbar.add(newCheckBox);
 			newCheckBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
