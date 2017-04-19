@@ -147,9 +147,11 @@ public class EquipmentEditor extends JFrame {
 		factionsComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				JComboBox cb = (JComboBox)event.getSource();
-				System.out.println(cb.getSelectedItem().toString());
-				controller.setCurrentFaction(cb.getSelectedItem().toString());
-				factionsComboBox.setSelectedItem(cb.getSelectedItem());
+				if (cb.getSelectedItem() != null) {
+					System.out.println(cb.getSelectedItem().toString());
+					controller.setCurrentFaction(cb.getSelectedItem().toString());
+					factionsComboBox.setSelectedItem(cb.getSelectedItem());
+				}
 			}
 		});
 
@@ -354,9 +356,7 @@ public class EquipmentEditor extends JFrame {
 	 * Opens a dialog to create a new unit with the name specified by user
 	 */
 	private void createNewUnit() {
-		// TODO Auto-generated method stub
-		String name = JOptionPane.showInputDialog("Введите название нового шаблона:");
-		controller.createUnit(name);
+		controller.createUnitWithDialog();
 	}
 
 	class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {

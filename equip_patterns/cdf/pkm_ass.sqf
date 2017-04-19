@@ -9,6 +9,3 @@ removeVest _unit;
 removeBackpack _unit;
 removeHeadgear _unit;
 removeGoggles _unit;
-_unit addBackpack 'rhs_assault_umbts';
-_unit addItemToBackpack 'rhs_100Rnd_762x54mmR';
-_unit addItemToBackpack 'rhs_100Rnd_762x54mmR_green';

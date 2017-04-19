@@ -7,6 +7,8 @@ public class Unit {
 	private HashSet<Unit> parents = new HashSet<>();
 	private String name;
 	private Faction faction;
+	private int x;
+	private int y;
 	
 	public ArrayList<ArmaEquip> getAllItems() {
 		return items;
@@ -81,6 +83,8 @@ public class Unit {
 	
 	public void addItem(ArmaEquip item) {
 		// TODO: combine similar items
+		AddableType[] combinableTypes = new AddableType[] {AddableType.HEADGEAR,AddableType.UNIFORM, AddableType.VEST};
+		//if (combinableTypes.item.addableType)
 		this.items.add(item);
 	}
 
@@ -92,5 +96,26 @@ public class Unit {
 		for (ArmaEquip item: items) {
 			this.addItem(item);
 		}
+	}
+
+	public void setGraphPosition(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+	
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 }

@@ -9,5 +9,3 @@ removeVest _unit;
 removeBackpack _unit;
 removeHeadgear _unit;
 removeGoggles _unit;
-_unit addBackpack 'rhs_rpg_empty';
-for '_i' from 1 to 3 do {_unit addItemToBackpack 'rhs_rpg7_PG7VL_mag';};

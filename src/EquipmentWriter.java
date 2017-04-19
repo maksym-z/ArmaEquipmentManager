@@ -100,6 +100,9 @@ public class EquipmentWriter {
 				this.addToPrecompileList(pathToFunctionName(path) + " = compile preprocessFileLineNumbers " + enquote(path) + ";");
 				writer.write(System.lineSeparator());
 			}
+			if (unit.getX()!=0 || unit.getY()!=0) {
+				writer.write("// pos " + unit.getX() + " " + unit.getY());
+			}
 			writer.close();
 			return this.precompileList;
 		}
@@ -128,8 +131,12 @@ public class EquipmentWriter {
 			throws UnsupportedEncodingException, FileNotFoundException, IOException {
 		this.equipment = unit.getAllItems();
 		this.unit = unit;
-		this.path = EQUIPMENT_DIRECTORY + unit.getFaction().getName() + "\\"
-				+ unit.getName() + ".sqf";
+		this.path = getPath(unit);
 		this.precompile = precompile;
+	}
+	
+	public static String getPath(Unit unit) {
+		return EQUIPMENT_DIRECTORY + unit.getFaction().getName() + "\\"
+				+ unit.getName() + ".sqf";
 	}
 }

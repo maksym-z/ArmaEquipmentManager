@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxGraphModel.mxGeometryChange;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
@@ -60,6 +61,16 @@ public class GraphView extends JFrame {
 					System.out.println("cell=" + graph.getLabel(cell));
 				}
 			}
+			
+			public void mouseClicked(MouseEvent event)
+			{
+			  if (event.getClickCount() == 2) {
+				  Object cell = graphComponent.getCellAt(event.getX(), event.getY());
+				  if (cell==null) {
+						controller.createUnitWithDialog(event.getX(), event.getY());
+				  }
+			  }
+			}
 		});
 
 		graphComponent.getConnectionHandler().addListener(mxEvent.CONNECT, new mxIEventListener() {
@@ -80,6 +91,10 @@ public class GraphView extends JFrame {
 				
 			}
 		});
+		
+		
+		graph.setCellsEditable(false);
+		graph.setCellsDisconnectable(false);
 	}
 
 	public void refreshGraph(Faction faction) {
@@ -118,24 +133,34 @@ public class GraphView extends JFrame {
 		int column = 100;
 		Faction faction = controller.getCurrentFaction();
 		Object parent = graph.getDefaultParent();
+		int x;
+		int y;
 		if (!vertices.containsKey(unitName)) {
-			faction.getUnit(unitName).updateChildren();
-			faction.getUnit(unitName).updateParentInfo();
-			if (faction.getUnit(unitName).getParents().size() > 0
-					&& faction.getUnit(unitName).getChildren().size() > 0) {
-				if (faction.getUnit(unitName).getParents().size() > faction.getUnit(unitName).getChildren()
-						.size()) {
-					column = 300;
-				} else {
-					column = 150;
+			Unit unit = faction.getUnit(unitName); 
+			unit.updateChildren();
+			unit.updateParentInfo();
+			if (unit.getX()==0 && unit.getY()==0) {
+				if (unit.getParents().size() > 0
+						&& unit.getChildren().size() > 0) {
+					if (unit.getParents().size() > faction.getUnit(unitName).getChildren()
+							.size()) {
+						column = 300;
+					} else {
+						column = 150;
+					}
+				} else if (unit.getParents().size() > 0) {
+					column = 450; // TODO: THIS IS A PROTOTYPE
+				} else if (unit.getChildren().size() > 0) {
+					column = 10;
 				}
-			} else if (faction.getUnit(unitName).getParents().size() > 0) {
-				column = 450; // TODO: THIS IS A PROTOTYPE
-			} else if (faction.getUnit(unitName).getChildren().size() > 0) {
-				column = 10;
+				x = column;
+				y = rowCount * 20;
+			} else {
+				x = unit.getX();
+				y = unit.getY();
 			}
 			rowCount++;
-			vertices.put(unitName, graph.insertVertex(parent, null, unitName, column, rowCount * 20, 80, 30));
+			vertices.put(unitName, graph.insertVertex(parent, null, unitName, x, y, 80, 30));
 		}
 	}
 

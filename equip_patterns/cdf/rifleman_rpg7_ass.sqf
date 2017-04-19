@@ -9,6 +9,3 @@ removeVest _unit;
 removeBackpack _unit;
 removeHeadgear _unit;
 removeGoggles _unit;
-[_unit] call bn_equip_cdf_rifleman_base;
-[_unit] call bn_equip_cdf_rpg7_ammo;
-[_unit] call bn_equip_cdf_assistant;

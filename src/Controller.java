@@ -103,16 +103,16 @@ public class Controller {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void updateAllChildren(Faction faction) {
-		for(String unitName: faction.getUnits().keySet()) {
+		for (String unitName : faction.getUnits().keySet()) {
 			faction.getUnit(unitName).updateChildren();
 		}
 	}
-	
+
 	public void saveAll(Faction faction) {
 		updateAllChildren(faction);
-		for(String unitName: faction.getUnits().keySet()) {
+		for (String unitName : faction.getUnits().keySet()) {
 			saveUnit(faction.getUnit(unitName));
 		}
 	}
@@ -167,6 +167,10 @@ public class Controller {
 		}
 	}
 
+	public Unit createUnit(String unitName) {
+		return createUnit(unitName, 0, 0);
+	}
+
 	/**
 	 * Creates a new unit in the current faction with the given name and sets it
 	 * as selected.
@@ -174,27 +178,34 @@ public class Controller {
 	 * @param unitName
 	 * @return
 	 */
-	public Unit createUnit(String unitName) {
+	public Unit createUnit(String unitName, int x, int y) {
 		Unit newUnit = new Unit();
 		newUnit.setName(unitName);
+		newUnit.setX(x);
+		newUnit.setY(y);
+		getCurrentFaction().addUnit(newUnit);
+		setSelectedUnit(newUnit.getName());
+		graphView.addUnit(newUnit.getName());
+		createUnitFile(newUnit);
+		return newUnit;
+	}
+
+	private void createUnitFile(Unit newUnit) {
+		String unitName = newUnit.getName();
 		if (unitName != null && unitName.length() > 0) {
 			String extension = "";
 			if (!unitName.toLowerCase().endsWith(".sqf"))
 				extension = ".sqf";
-			/*
-			 * File f = new File( EQUIPMENT_DIRECTORY +
-			 * getCurrentFaction().getName() + "\\" + unitName + extension); try
-			 * { f.createNewFile(); //
-			 * editor.unitsComboBox.setSelectedItem(unitName); } catch
-			 * (IOException e) { // TODO unable to create file
-			 * e.printStackTrace(); }
-			 */
+			File f = new File(EquipmentWriter.getPath(newUnit));
+			if (!f.exists()) {
+				try {
+					f.createNewFile(); //
+					editor.unitsComboBox.setSelectedItem(unitName);
+				} catch (IOException e) { // TODO unable to create file
+					e.printStackTrace();
+				}
+			}
 		}
-		getCurrentFaction().addUnit(newUnit);
-		setSelectedUnit(newUnit.getName());
-		graphView.addUnit(newUnit.getName());
-		setGotChanges(true);
-		return newUnit;
 	}
 
 	public Faction createNewFaction() {
@@ -203,10 +214,12 @@ public class Controller {
 			File f = new File(EquipmentWriter.EQUIPMENT_DIRECTORY + name);
 			if (!f.exists()) {
 				f.mkdir();
-				editor.factionsComboBox.setSelectedItem(name);
 				Faction faction = new Faction(name);
 				factions.put(name, faction);
+				editor.updateFactionList();
+				editor.factionsComboBox.setSelectedItem(name);
 				return faction;
+				
 			} else {
 				errorMessage("‘ракци€ с таким названием уже существует!");
 			}
@@ -306,5 +319,15 @@ public class Controller {
 
 	public void removeSomethingToListenFor(AddableType addableType) {
 		thingsToListenFor.remove(addableType);
+	}
+
+	public Unit createUnitWithDialog() {
+		String name = JOptionPane.showInputDialog("¬ведите название нового шаблона:");
+		return createUnit(name);
+	}
+
+	public Unit createUnitWithDialog(int x, int y) {
+		String name = JOptionPane.showInputDialog("¬ведите название нового шаблона:");
+		return createUnit(name, x, y);
 	}
 }
