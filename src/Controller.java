@@ -328,6 +328,10 @@ public class Controller {
 
 	public Unit createUnitWithDialog(int x, int y) {
 		String name = JOptionPane.showInputDialog("Введите название нового шаблона:");
-		return createUnit(name, x, y);
+		if (name != null && !name.isEmpty()) { 
+			return createUnit(name, x, y);
+		} else {
+			return null;
+		}
 	}
 }
