@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class Unit {
@@ -83,9 +84,12 @@ public class Unit {
 	
 	public void addItem(ArmaEquip item) {
 		// TODO: combine similar items
-		AddableType[] combinableTypes = new AddableType[] {AddableType.HEADGEAR,AddableType.UNIFORM, AddableType.VEST};
-		//if (combinableTypes.item.addableType)
-		this.items.add(item);
+		if (item.isCombinable() && items.stream().filter(x -> x.addableType==item.addableType).count() > 0) {
+			ArmaEquip combinableItem = items.stream().filter(x -> x.addableType==item.addableType).findFirst().get();
+			combinableItem.classnames.addUnique(item.classnames.getAsList());
+		} else {
+			this.items.add(item);
+		};
 	}
 
 	public void addItems(ArrayList<ArmaEquip> items) {

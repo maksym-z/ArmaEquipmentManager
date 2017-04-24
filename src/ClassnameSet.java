@@ -84,4 +84,12 @@ public class ClassnameSet {
 	public void add(String classname) {
 		classnames.add(classname);
 	}
+
+	public void addUnique(List<String> asList) {
+		for (String classname: asList) {
+			if (!classnames.contains(classname)) {
+				classnames.add(classname);
+			}
+		}
+	}
 }
